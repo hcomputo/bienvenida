@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bienvenido a DOF Buscador</title>
+<meta name="description" content="Tu asistente legal digital: revisa el Diario Oficial del Estado de Yucatán y cuida las espaldas de tu despacho.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --noche: #0a0e1a;
+    --noche-2: #131a2e;
+    --panel: #182136;
+    --dorado: #f0b429;
+    --dorado-claro: #ffd45e;
+    --cyan: #38e1c4;
+    --azul-luz: #4f8cff;
+    --verde: #2dd46f;
+    --texto: #f5f8fd;
+    --texto-2: #b3bfd4;
+    --texto-3: #7586a3;
+    --linea: rgba(120,150,200,0.16);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Instrument Sans', system-ui, sans-serif;
+    background: var(--noche);
+    color: var(--texto);
+    min-height: 100vh;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(760px circle at 12% 0%, rgba(240,180,41,0.09), transparent 55%),
+      radial-gradient(680px circle at 88% 8%, rgba(79,140,255,0.10), transparent 50%),
+      radial-gradient(700px circle at 50% 120%, rgba(45,212,168,0.06), transparent 55%);
+  }
+  .wrap { position: relative; z-index: 1; width: 100%; max-width: 780px; margin: 0 auto; padding: 0 22px; }
+
+  /* Portada */
+  .hero { text-align: center; padding: 56px 0 10px; }
+  .escudo { width: 150px; max-width: 46vw; height: auto; display: block; margin: 0 auto 14px; filter: drop-shadow(0 10px 28px rgba(240,180,41,0.30)); }
+  .eyebrow {
+    display: inline-block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 2.5px;
+    color: var(--dorado-claro); padding: 6px 15px; border: 1px solid rgba(240,180,41,0.3);
+    border-radius: 100px; margin-bottom: 16px; background: rgba(240,180,41,0.06);
+  }
+  h1 {
+    font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(1.8rem, 5.4vw, 2.6rem);
+    line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 16px; text-wrap: balance;
+  }
+  h1 .grad { background: linear-gradient(100deg, var(--dorado), var(--dorado-claro)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .intro { color: var(--texto-2); font-size: 1.05rem; max-width: 640px; margin: 0 auto; text-wrap: pretty; }
+  .intro strong { color: var(--texto); font-weight: 600; }
+
+  h2 {
+    font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1.2rem; letter-spacing: 0.2px;
+    margin: 46px 0 16px; display: flex; align-items: center; gap: 10px;
+  }
+  h2::before { content: ""; width: 4px; height: 20px; border-radius: 3px; background: linear-gradient(var(--dorado), var(--dorado-claro)); }
+
+  /* Lo que hace por ti */
+  .ventajas { display: grid; gap: 14px; }
+  .ventaja {
+    background: linear-gradient(160deg, var(--panel), var(--noche-2)); border: 1px solid var(--linea);
+    border-radius: 16px; padding: 18px 20px; display: flex; gap: 16px; align-items: flex-start;
+  }
+  .ventaja .ico {
+    flex-shrink: 0; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+    background: rgba(56,225,196,0.10); border: 1px solid rgba(56,225,196,0.28); color: var(--cyan);
+  }
+  .ventaja p { color: var(--texto-2); font-size: 0.98rem; }
+  .ventaja p strong { color: var(--texto); font-weight: 600; }
+  .ventaja.mas { background: linear-gradient(160deg, rgba(240,180,41,0.10), rgba(240,180,41,0.03)); border-color: rgba(240,180,41,0.32); }
+  .ventaja.mas .ico { background: rgba(240,180,41,0.12); border-color: rgba(240,180,41,0.35); color: var(--dorado-claro); }
+
+  /* Protección */
+  .proteccion {
+    background: linear-gradient(160deg, rgba(240,180,41,0.10), rgba(240,180,41,0.03));
+    border: 1px solid rgba(240,180,41,0.32); border-radius: 18px; padding: 22px 24px;
+  }
+  .proteccion p + p { margin-top: 12px; }
+  .proteccion p { color: var(--texto-2); }
+  .proteccion .destacado { color: var(--texto); font-weight: 500; }
+
+  /* Pasos (secuencia real) */
+  .pasos { list-style: none; counter-reset: paso; display: grid; gap: 12px; }
+  .pasos li {
+    counter-increment: paso; position: relative; padding: 14px 18px 14px 62px;
+    background: var(--panel); border: 1px solid var(--linea); border-radius: 14px; color: var(--texto-2);
+  }
+  .pasos li::before {
+    content: counter(paso); position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+    width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
+    font-family: 'Sora', sans-serif; font-weight: 700; font-size: 0.95rem;
+    color: var(--noche); background: linear-gradient(135deg, var(--dorado), var(--dorado-claro));
+  }
+
+  .nota { margin-top: 22px; font-size: 0.9rem; color: var(--texto-3); border-left: 3px solid var(--linea); padding-left: 14px; }
+
+  /* Contacto */
+  .contacto { margin: 44px 0 0; text-align: center; }
+  .contacto p { color: var(--texto-2); margin-bottom: 14px; }
+  .wa {
+    display: inline-flex; align-items: center; gap: 10px; padding: 13px 24px; border-radius: 100px;
+    background: var(--verde); color: #04210f; font-weight: 600; text-decoration: none; font-size: 1rem;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .wa:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(45,212,111,0.28); }
+  .wa:focus-visible, .redes a:focus-visible { outline: 2px solid var(--dorado-claro); outline-offset: 3px; }
+  .redes { margin-top: 22px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .redes a {
+    color: var(--texto); text-decoration: none; font-size: 0.92rem; padding: 8px 18px;
+    border: 1px solid var(--linea); border-radius: 100px; background: var(--panel); transition: border-color .2s ease;
+  }
+  .redes a:hover { border-color: rgba(240,180,41,0.5); }
+
+  .footer { position: relative; z-index: 1; text-align: center; margin-top: 52px; padding: 22px 20px 34px; border-top: 1px solid var(--linea); color: var(--texto-3); font-size: 0.84rem; }
+  .footer strong { color: var(--dorado); font-family: 'Sora', sans-serif; }
+
+  @media (max-width: 480px) {
+    .hero { padding-top: 40px; }
+    .proteccion { padding: 18px; }
+    .pasos li { padding-left: 58px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <img class="escudo" src="logo-dof.png" alt="Logotipo de DOF Buscador">
+      <span class="eyebrow">Bienvenido(a)</span>
+      <h1>Tu asistente legal digital <span class="grad">cuida tus espaldas</span></h1>
+      <p class="intro">Gracias por instalar DOF Buscador. No es un simple lector de páginas web: es un asistente legal digital que cuida las espaldas del abogado. <strong>Ningún litigante tiene el tiempo ni la tecnología para validar si el PDF que subió el gobierno es el correcto a las 12 de la noche; DOF Buscador sí lo hace.</strong></p>
+    </header>
+
+    <main>
+      <h2>Lo que hace por ti</h2>
+      <div class="ventajas">
+        <div class="ventaja mas">
+          <div class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+          <p><strong>Mucho más que revisar el Diario.</strong> DOF Buscador es una tecnología desarrollada para el trabajo profesional del abogado: además de revisar con seguridad el Diario Oficial de Yucatán, cuenta con múltiples herramientas muy útiles en el trabajo diario de un despacho, que agilizan tu carga laboral y mantienen todos tus expedientes en orden, de forma digital y a un clic de distancia.</p>
+        </div>
+        <div class="ventaja">
+          <div class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div>
+          <p>Revisa el Diario Oficial del Estado de Yucatán desde la medianoche y busca tus nombres y números de expediente.</p>
+        </div>
+        <div class="ventaja">
+          <div class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.5 3.2 8 8 9 4.8-1 8-4.5 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+          <p>Verifica que el archivo publicado sea realmente el Diario del día. Si la página oficial se equivoca o no responde, no te manda información equivocada: te avisa y te envía tu reporte en cuanto se corrige.</p>
+        </div>
+        <div class="ventaja">
+          <div class="ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg></div>
+          <p>Guarda cada publicación en la ficha de tu expediente y te ayuda con tu agenda y con la calculadora de términos.</p>
+        </div>
+      </div>
+
+      <h2>Tu información está protegida</h2>
+      <section class="proteccion">
+        <p class="destacado">Aprovéchalo con tranquilidad: DOF Buscador cuenta con un sistema inteligente de revisión que ayuda a detectar y frenar incluso errores provenientes de la página del Diario Oficial del Gobierno del Estado, brindando una protección adicional a tu despacho.</p>
+        <p>Tus expedientes se guardan en tu propio equipo, tu copia se activa con un código exclusivo de tu computadora y puedes crear un respaldo de tus expedientes cuando quieras. El sistema se actualiza constantemente para ofrecerte siempre los mejores resultados.</p>
+      </section>
+
+      <h2>Para empezar</h2>
+      <ol class="pasos">
+        <li>Agrega tus criterios de búsqueda: los nombres de tus clientes y tus números de expediente.</li>
+        <li>Activa el envío de avisos por correo y revisa que la dirección donde quieres recibirlos sea la correcta.</li>
+        <li>Tu primer reporte llegará poco después de la medianoche.</li>
+      </ol>
+
+      <p class="nota">DOF Buscador es una herramienta de apoyo: ante un término por vencer, confirma siempre en la publicación oficial.</p>
+
+      <section class="contacto">
+        <p>¿Dudas? Escríbenos por WhatsApp.</p>
+        <a class="wa" href="https://wa.me/529995510613" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 0 0 3.2 16.9L2 22l5.3-1.4A11 11 0 1 0 20.5 3.5Zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-3.1.8.8-3-.2-.3A9 9 0 1 1 12 20.5Zm5-6.7c-.3-.1-1.6-.8-1.9-.9s-.5-.1-.7.1-.8.9-.9 1.1-.3.2-.6.1a7.4 7.4 0 0 1-3.7-3.2c-.3-.5.3-.5.8-1.5a.6.6 0 0 0 0-.5l-.9-2c-.2-.5-.5-.4-.7-.4h-.6a1.2 1.2 0 0 0-.9.4 3.7 3.7 0 0 0-1.1 2.7 6.4 6.4 0 0 0 1.3 3.4 14.6 14.6 0 0 0 5.6 4.9c2 .8 2.8.9 3.8.7a3.2 3.2 0 0 0 2.1-1.5 2.6 2.6 0 0 0 .2-1.5c-.1-.1-.3-.2-.6-.3Z"/></svg>
+          WhatsApp 9995 510613
+        </a>
+        <div class="redes">
+          <a href="https://www.facebook.com/profile.php?id=61592630541115" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://www.instagram.com/dof_buscador/" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <p><strong>DOF Buscador</strong> · Tu Oficina Digital Jurídica</p>
+  </footer>
+</body>
+</html>
